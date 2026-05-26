@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zerto Automation with Ansible & Semaphore UI</title>
+<style>
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
+body {
+font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+line-height: 1.6;
+color: #333;
+background-color: #f8f9fa;
+}
+
+header {
+background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+color: white;
+padding: 1rem 0;
+position: sticky;
+top: 0;
+z-index: 100;
+box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+nav {
+max-width: 1200px;
+margin: 0 auto;
+padding: 0 2rem;
+display: flex;
+justify-content: space-between;
+align-items: center;
+}
+
+.logo {
+font-size: 1.5rem;
+font-weight: bold;
+text-decoration: none;
+color: white;
+}
+
+nav ul {
+list-style: none;
+display: flex;
+gap: 2rem;
+}
+
+nav a {
+color: white;
+text-decoration: none;
+font-weight: 500;
+transition: opacity 0.3s;
+}
+
+nav a:hover {
+opacity: 0.8;
+}
+
+.container {
+max-width: 1200px;
+margin: 0 auto;
+padding: 0 2rem;
+}
+
+.hero {
+background: linear-gradient(135deg, #0066cc 0%, #0052a3 100%);
+color: white;
+padding: 6rem 2rem;
+text-align: center;
+}
+
+.hero h1 {
+font-size: 3rem;
+margin-bottom: 1rem;
+}
+
+.hero p {
+font-size: 1.3rem;
+margin-bottom: 2rem;
+opacity: 0.95;
+}
+
+.btn-group {
+display: flex;
+gap: 1rem;
+justify-content: center;
+flex-wrap: wrap;
+}
+
+.btn {
+display: inline-block;
+padding: 0.75rem 2rem;
+border-radius: 5px;
+text-decoration: none;
+font-weight: 600;
+transition: all 0.3s;
+cursor: pointer;
+border: none;
+font-size: 1rem;
+}
+
+.btn-primary {
+background: white;
+color: #0066cc;
+}
+
+.btn-primary:hover {
+transform: translateY(-2px);
+box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.btn-secondary {
+background: rgba(255, 255, 255, 0.2);
+color: white;
+border: 2px solid white;
+}
+
+.btn-secondary:hover {
+background: rgba(255, 255, 255, 0.3);
+}
+
+section {
+padding: 4rem 2rem;
+background: white;
+margin: 2rem 0;
+border-radius: 8px;
+}
+
+h2 {
+font-size: 2.5rem;
+color: #0066cc;
+margin-bottom: 2rem;
+text-align: center;
+}
+
+h3 {
+font-size: 1.3rem;
+color: #333;
+margin: 1.5rem 0 0.5rem 0;
+}
+
+.features-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+gap: 2rem;
+margin-top: 2rem;
+}
+
+.feature-card {
+background: #f8f9fa;
+padding: 2rem;
+border-radius: 8px;
+border-left: 4px solid #0066cc;
+transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.feature-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.feature-card h3 {
+margin-top: 0;
+color: #0066cc;
+}
+
+.code-block {
+background: #2c3e50;
+color: #ecf0f1;
+padding: 1.5rem;
+border-radius: 5px;
+overflow-x: auto;
+margin: 1rem 0;
+font-family: 'Courier New', monospace;
+font-size: 0.9rem;
+}
+
+.step {
+margin: 2rem 0;
+padding: 1.5rem;
+background: #f8f9fa;
+border-left: 4px solid #0066cc;
+border-radius: 4px;
+}
+
+.step h4 {
+color: #0066cc;
+margin-bottom: 0.5rem;
+}
+
+.architecture {
+background: #f8f9fa;
+padding: 2rem;
+border-radius: 8px;
+text-align: center;
+margin: 2rem 0;
+}
+
+.architecture-box {
+display: inline-block;
+background: white;
+border: 2px solid #0066cc;
+padding: 1rem 2rem;
+margin: 0.5rem;
+border-radius: 5px;
+font-weight: 600;
+}
+
+.arrow {
+display: inline-block;
+margin: 0 1rem;
+color: #0066cc;
+font-size: 1.5rem;
+}
+
+.screenshots {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+gap: 2rem;
+margin-top: 2rem;
+}
+
+.screenshot-card {
+background: #f8f9fa;
+padding: 1rem;
+border-radius: 8px;
+text-align: center;
+}
+
+.screenshot-placeholder {
+background: #e8f4f8;
+border: 2px dashed #0066cc;
+padding: 3rem;
+border-radius: 5px;
+color: #0066cc;
+font-style: italic;
+}
+
+.quick-links {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+gap: 1.5rem;
+margin: 2rem 0;
+}
+
+.quick-link-card {
+background: #f8f9fa;
+padding: 1.5rem;
+border-radius: 8px;
+text-align: center;
+border: 2px solid #e8f4f8;
+transition: all 0.3s;
+}
+
+.quick-link-card:hover {
+border-color: #0066cc;
+box-shadow: 0 5px 15px rgba(0, 102, 204, 0.1);
+}
+
+.quick-link-card h3 {
+margin-top: 0;
+}
+
+.quick-link-card a {
+color: #0066cc;
+text-decoration: none;
+font-weight: 600;
+}
+
+.quick-link-card a:hover {
+text-decoration: underline;
+}
+
+footer {
+background: #2c3e50;
+color: white;
+text-align: center;
+padding: 2rem;
+margin-top: 4rem;
+}
+
+footer a {
+color: #0066cc;
+text-decoration: none;
+}
+
+footer a:hover {
+text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+.hero h1 {
+font-size: 2rem;
+}
+
+nav ul {
+gap: 1rem;
+font-size: 0.9rem;
+}
+
+section {
+padding: 2rem 1rem;
+}
+
+h2 {
+font-size: 1.8rem;
+}
+}
+</style>
+</head>
+<body>
+<!-- Navigation -->
+<header>
+<nav class="container">
+<a href="#home" class="logo">🚀 Zerto Automation</a>
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#features">Features</a></li>
+<li><a href="#getting-started">Getting Started</a></li>
+<li><a href="#usage">Usage</a></li>
+<li><a href="#support">Support</a></li>
+</ul>
+</nav>
+</header>
+
+<!-- Hero Section -->
+<section class="hero" id="home">
+<div class="container">
+<h1>Zerto Automation with Ansible & Semaphore UI</h1>
+<p>Automate your disaster recovery operations with powerful Ansible playbooks orchestrated through Semaphore UI</p>
+<div class="btn-group">
+<a href="https://github.com/users/adobao/projects/1" class="btn btn-primary">View Project Board</a>
+<a href="#getting-started" class="btn btn-secondary">Get Started</a>
+</div>
+</div>
+</section>
+
+<!-- Overview Section -->
+<section id="overview">
+<div class="container">
+<h2>📋 Project Overview</h2>
+<p>This project automates Zerto operations using Ansible playbooks, orchestrated through Semaphore UI. It provides a modular, repeatable, and UI-driven workflow for disaster recovery automation.</p>
+<p>Whether you need to perform failovers, failbacks, or regular VPG status checks, this automation framework makes it simple, reliable, and repeatable.</p>
+
+<h3>Quick Links</h3>
+<div class="quick-links">
+<div class="quick-link-card">
+<h3>📊 Project Board</h3>
+<p>View detailed documentation and project status</p>
+<a href="https://github.com/users/adobao/projects/1">Visit Board →</a>
+</div>
+<div class="quick-link-card">
+<h3>🐛 Issues & Bugs</h3>
+<p>Report issues or request features</p>
+<a href="https://github.com/adobao/Automation/issues">View Issues →</a>
+</div>
+<div class="quick-link-card">
+<h3>💻 Repository</h3>
+<p>Browse the source code</p>
+<a href="https://github.com/adobao/Automation">View Repo →</a>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Features Section -->
+<section id="features">
+<div class="container">
+<h2>✨ Key Features</h2>
+<div class="features-grid">
+<div class="feature-card">
+<h3>🔄 Automated Failover & Failback</h3>
+<p>Orchestrate DR operations automatically with reliable, repeatable workflows</p>
+</div>
+<div class="feature-card">
+<h3>🎯 Ansible-driven Orchestration</h3>
+<p>Modular, reusable playbooks for flexible automation</p>
+</div>
+<div class="feature-card">
+<h3>🖥️ Semaphore UI Integration</h3>
+<p>Visual pipeline management and real-time monitoring</p>
+</div>
+<div class="feature-card">
+<h3>🔌 API-driven Operations</h3>
+<p>Direct API integration with Zerto for reliability</p>
+</div>
+<div class="feature-card">
+<h3>🧩 Modular Structure</h3>
+<p>Reusable roles and playbooks for flexibility</p>
+</div>
+<div class="feature-card">
+<h3>📊 Real-time Monitoring</h3>
+<p>Track automation execution and results in Semaphore UI</p>
+</div>
+<div class="feature-card">
+<h3>⚠️ Error Handling & Logging</h3>
+<p>Comprehensive logging and error recovery</p>
+</div>
+<div class="feature-card">
+<h3>🔐 Credential Management</h3>
+<p>Secure handling of API credentials and secrets</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Getting Started Section -->
+<section id="getting-started">
+<div class="container">
+<h2>🚀 Getting Started</h2>
+
+<h3>Prerequisites</h3>
+<div class="step">
+<ul style="margin-left: 1.5rem;">
+<li>Python 3.8 or higher</li>
+<li>Ansible 2.9 or higher</li>
+<li>Zerto API credentials</li>
+<li>Semaphore UI instance running</li>
+<li>Git installed</li>
+</ul>
+</div>
+
+<h3>Installation Steps</h3>
+
+<div class="step">
+<h4>1. Clone the Repository</h4>
+<div class="code-block">git clone https://github.com/adobao/Automation.git
+cd Automation</div>
+</div>
+
+<div class="step">
+<h4>2. Install Python Dependencies</h4>
+<div class="code-block">pip install -r requirements.txt</div>
+</div>
+
+<div class="step">
+<h4>3. Configure Ansible Inventory</h4>
+<p>Edit <code>inventory/hosts</code> with your Zerto servers and update group variables in <code>inventory/group_vars/</code></p>
+</div>
+
+<div class="step">
+<h4>4. Import Semaphore Templates</h4>
+<p>Log into your Semaphore UI instance and import playbooks from the <code>/playbooks/</code> directory</p>
+</div>
+
+<div class="step">
+<h4>5. Run Your First Automation</h4>
+<div class="code-block">ansible-playbook playbooks/check_vpg_status.yml -i inventory/hosts</div>
+</div>
+</div>
+</section>
+
+<!-- Usage Section -->
+<section id="usage">
+<div class="container">
+<h2>💡 Usage Examples</h2>
+
+<div class="step">
+<h4>Check VPG Status</h4>
+<p>Check the status of all Virtual Protection Groups (VPGs):</p>
+<div class="code-block">ansible-playbook playbooks/check_vpg_status.yml -i inventory/hosts</div>
+</div>
+
+<div class="step">
+<h4>Perform Failover</h4>
+<p>Initiate a failover for specified VPGs:</p>
+<div class="code-block">ansible-playbook playbooks/failover.yml -i inventory/hosts --extra-vars "vpg_name=MyVPG"</div>
+</div>
+
+<div class="step">
+<h4>Perform Failback</h4>
+<p>Execute a failback operation:</p>
+<div class="code-block">ansible-playbook playbooks/failback.yml -i inventory/hosts --extra-vars "vpg_name=MyVPG"</div>
+</div>
+
+<div class="step">
+<h4>Using Semaphore UI</h4>
+<ol style="margin-left: 1.5rem;">
+<li>Log into Semaphore UI at <code>http://your-semaphore-instance:3000</code></li>
+<li>Select your project</li>
+<li>Choose a template (e.g., "Check VPG Status")</li>
+<li>Click "Run"</li>
+<li>Monitor execution in real-time</li>
+<li>View logs and results</li>
+</ol>
+</div>
+</div>
+</section>
+
+<!-- Architecture Section -->
+<section id="architecture">
+<div class="container">
+<h2>🏗️ Architecture</h2>
+<p>The system consists of three main components working together:</p>
+
+<div class="architecture">
+<div class="architecture-box">Semaphore UI</div>
+<div class="arrow">→</div>
+<div class="architecture-box">Ansible Control Node</div>
+<div class="arrow">→</div>
+<div class="architecture-box">Zerto API</div>
+<div class="arrow">→</div>
+<div class="architecture-box">Zerto Environment</div>
+</div>
+
+<h3>Components</h3>
+<div class="features-grid">
+<div class="feature-card">
+<h3>Semaphore UI</h3>
+<p>Provides web interface for pipeline management and monitoring</p>
+</div>
+<div class="feature-card">
+<h3>Ansible Control Node</h3>
+<p>Executes playbooks and orchestrates operations</p>
+</div>
+<div class="feature-card">
+<h3>Zerto API</h3>
+<p>Manages virtual protection groups and DR operations</p>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Screenshots Section -->
+<section id="screenshots">
+<div class="container">
+<h2>📸 Screenshots</h2>
+<div class="screenshots">
+<div class="screenshot-card">
+<h3>Semaphore UI Dashboard</h3>
+<div class="screenshot-placeholder">Dashboard Screenshot Here</div>
+</div>
+<div class="screenshot-card">
+<h3>Automation Pipeline</h3>
+<div class="screenshot-placeholder">Pipeline Screenshot Here</div>
+</div>
+<div class="screenshot-card">
+<h3>Results & Monitoring</h3>
+<div class="screenshot-placeholder">Results Screenshot Here</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- Support Section -->
+<section id="support">
+<div class="container">
+<h2>📞 Support & Resources</h2>
+
+<div class="features-grid">
+<div class="feature-card">
+<h3>🐛 Report Issues</h3>
+<p>Found a bug or have a feature request?</p>
+<a href="https://github.com/adobao/Automation/issues" class="btn btn-primary" style="display: inline-block; margin-top: 1rem;">Open an Issue</a>
+</div>
+<div class="feature-card">
+<h3>📊 Project Board</h3>
+<p>View project status and detailed documentation</p>
+<a href="https://github.com/users/adobao/projects/1" class="btn btn-primary" style="display: inline-block; margin-top: 1rem;">View Board</a>
+</div>
+<div class="feature-card">
+<h3>📚 Documentation</h3>
+<p>Check the Project Board for comprehensive guides</p>
+<a href="https://github.com/users/adobao/projects/1" class="btn btn-primary" style="display: inline-block; margin-top: 1rem;">Read Docs</a>
+</div>
+</div>
+
+<h3 style="margin-top: 2rem;">External Resources</h3>
+<ul style="margin-left: 1.5rem; margin-top: 1rem;">
+<li><a href="https://www.zerto.com/solutions/technical-documentation/zerto-api/">Zerto API Documentation</a></li>
+<li><a href="https://docs.ansible.com/">Ansible Documentation</a></li>
+<li><a href="https://github.com/adobao/Automation">GitHub Repository</a></li>
+</ul>
+</div>
+</section>
+
+<!-- Contributing Section -->
+<section id="contributing">
+<div class="container">
+<h2>🤝 Contributing</h2>
+<p>Contributions are welcome! Here's how you can help:</p>
+
+<div class="step">
+<h4>How to Contribute</h4>
+<ol style="margin-left: 1.5rem;">
+<li>Fork the repository</li>
+<li>Create a feature branch: <code>git checkout -b feature/your-feature-name</code></li>
+<li>Make your changes and test thoroughly</li>
+<li>Commit with clear messages: <code>git commit -m "Add: description"</code></li>
+<li>Push to your fork: <code>git push origin feature/your-feature-name</code></li>
+<li>Open a Pull Request with a description of your changes</li>
+</ol>
+</div>
+
+<div class="step">
+<h4>Guidelines</h4>
+<ul style="margin-left: 1.5rem;">
+<li>Follow Ansible best practices</li>
+<li>Include documentation for new features</li>
+<li>Test playbooks before submitting</li>
+<li>Use meaningful commit messages</li>
+</ul>
+</div>
+</div>
+</section>
+
+<!-- Footer -->
+<footer>
+<div class="container">
+<p>&copy; 2024 Zerto Automation with Ansible & Semaphore UI. All rights reserved.</p>
+<p style="margin-top: 1rem;">
+<a href="https://github.com/adobao/Automation">GitHub Repository</a> |
+<a href="https://github.com/users/adobao/projects/1">Project Board</a> |
+<a href="https://github.com/adobao/Automation/issues">Issues</a>
+</p>
+<p style="margin-top: 1rem; opacity: 0.8;">
+Built with ❤️ by <a href="https://github.com/adobao">@adobao</a>
+</p>
+</div>
+</footer>
+</body>
+</html>
+
+---
