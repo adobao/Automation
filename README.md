@@ -9,9 +9,9 @@ This project automates Zerto operations using Ansible playbooks, orchestrated th
 
 ## 🚀 Quick Links
 
-- **Project Details & Documentation:** [View Full Project](https://github.com/adobao/Automation/projects/1)
+- **Project Details & Documentation:** [View Full Project](https://github.com/users/adobao/projects/1)
 - **Issue Tracking:** [Open Issues](https://github.com/adobao/Automation/issues)
-- **Project Board:** [View Board](https://github.com/adobao/Automation/projects/1)
+- **Project Board:** [View Board](https://github.com/users/adobao/projects/1)
 
 ## ✨ Key Features
 
@@ -37,7 +37,7 @@ Automation/
 
 ## 📖 Full Documentation
 
-For complete installation instructions, usage examples, and troubleshooting, please visit the [Project Board](https://github.com/adobao/Automation/projects/1) where you'll find the detailed README.
+For complete installation instructions, usage examples, and troubleshooting, please visit the [Project Board](https://github.com/users/adobao/projects/1) where you'll find the detailed README.
 
 ## 🛠️ Getting Started
 
@@ -55,7 +55,7 @@ pip install -r requirements.txt
 ansible-playbook playbooks/check_vpg_status.yml
 ```
 
-For detailed setup instructions, see the [Full Project Documentation](https://github.com/adobao/Automation/projects/1).
+For detailed setup instructions, see the [Full Project Documentation](https://github.com/users/adobao/projects/1).
 
 ## 🤝 Contributing
 
@@ -68,11 +68,11 @@ This project is licensed under the MIT License.
 ## 📞 Support
 
 - **Issues:** [GitHub Issues](https://github.com/adobao/Automation/issues)
-- **Project Board:** [View Project](https://github.com/adobao/Automation/projects/1)
+- **Project Board:** [View Project](https://github.com/users/adobao/projects/1)
 
 ---
 
-**For full project details, visit the [Project Board](https://github.com/adobao/Automation/projects/1)**
+**For full project details, visit the [Project Board](https://github.com/users/adobao/projects/1)**
 ```
 
 ---
